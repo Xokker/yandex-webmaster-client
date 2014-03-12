@@ -7,6 +7,7 @@ package ru.webeffector.host;
  * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/errors.xml#index-verify
  *
  * @author Ernest Sadykov
+ * @since 12.03.2014
  */
 public enum CrawlingState {
     INDEXED("Site indexed"),

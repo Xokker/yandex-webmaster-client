@@ -7,6 +7,7 @@ package ru.webeffector.host;
  * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/errors.xml#denial-index
  *
  * @author Ernest Sadykov
+ * @since 12.03.2014
  */
 public enum CrawlingDenialDetails {
     WAITING("Site is waiting for indexing"),

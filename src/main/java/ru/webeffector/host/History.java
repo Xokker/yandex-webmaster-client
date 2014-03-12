@@ -7,6 +7,7 @@ import java.util.*;
 
 /**
  * @author Ernest Sadykov
+ * @since 11.03.2014
  */
 public class History {
     private SortedMap<DateTime, Integer> history;

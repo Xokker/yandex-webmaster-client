@@ -7,6 +7,7 @@ package ru.webeffector.host;
  * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/errors.xml#denial-verify
  *
  * @author Ernest Sadykov
+ * @since 12.03.2014
  */
 public enum VerificationRefusalDetails {
     DNS_NO_SUCH_ENTRY("The specified DNS record does not exist"),

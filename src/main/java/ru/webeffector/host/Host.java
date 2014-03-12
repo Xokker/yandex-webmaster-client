@@ -3,12 +3,14 @@ package ru.webeffector.host;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joda.time.DateTime;
+import ru.webeffector.Webmaster;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Class represents host.
@@ -17,13 +19,10 @@ import java.net.URL;
  * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/hosts.xml
  *
  * @author Ernest Sadykov
+ * @since 10.03.2014
  */
 @XmlRootElement
 public class Host {
-    static class IndexInfo {
-        private int indexCount;
-        private URL[] indexedUrls;
-    }
 
     @XmlAttribute(name = "href")
     private String url;
@@ -47,8 +46,6 @@ public class Host {
     @XmlElement(name = "tcy")
     private int tcy = -1;
 
-    private Stats stats;
-
     private IndexInfo indexInfo;
 
     @XmlElement
@@ -58,13 +55,14 @@ public class Host {
     private Crawling crawling;
 
     private History tcyHistory;
+
+    private Webmaster webmaster;
+
+    private Links links;
     // ...
 
     public int getUrlCount() {
-        if (stats == null) {
-            return urlCount;
-        }
-        return stats.getUrlCount();
+        return urlCount;
     }
 
     public String getUrl() {
@@ -103,6 +101,14 @@ public class Host {
         return crawling;
     }
 
+    public Webmaster getWebmaster() {
+        return webmaster;
+    }
+
+    public void setWebmaster(Webmaster webmaster) {
+        this.webmaster = webmaster;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
@@ -113,11 +119,11 @@ public class Host {
                 .append("urlCount", urlCount)
                 .append("indexCount", indexCount)
                 .append("tcy", tcy)
-                .append("stats", stats)
                 .append("indexInfo", indexInfo)
                 .append("verification", verification)
                 .append("crawling", crawling)
-                .append("tcyHistory", tcyHistory)
                 .toString();
     }
 }
+
+class Links { }

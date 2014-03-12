@@ -1,5 +1,8 @@
 package ru.webeffector;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -11,6 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/tasks/how-to-get-service-document.xml
  *
  * @author Ernest Sadykov
+ * @since 11.03.2014
  */
 @XmlRootElement(name = "service")
 class ServiceDocument {
@@ -29,5 +33,12 @@ class ServiceDocument {
 
     public String getHostsUrl() {
         return workspace.collection.hostUrl;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("hostsUrl", getHostsUrl())
+                .toString();
     }
 }

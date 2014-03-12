@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  * That adapter is used by JAXB for mapping string <-> JodaTime's DateTime.
  *
  * @author Ernest Sadykov
+ * @since 12.03.2014
  */
 class DateTimeAdapter extends XmlAdapter<String, DateTime> {
     @Override

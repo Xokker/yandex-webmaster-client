@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.*;
  * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/hosts-verify.xml
  *
  * @author Ernest Sadykov
+ * @since 10.03.2014
+ *
  * @see ru.webeffector.host.Host
  */
 @XmlRootElement

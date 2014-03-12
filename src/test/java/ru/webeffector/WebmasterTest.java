@@ -12,22 +12,22 @@ import java.util.List;
 
 /**
  * @author Ernest Sadykov
+ * @since 11.03.2014
  */
 public class WebmasterTest {
     private static final Logger logger = LoggerFactory.getLogger(WebmasterTest.class);
-    private static String accessToken;
+    private static List<Host> hosts;
 
     @BeforeClass
     public static void setUp() throws Exception {
-        accessToken = System.getProperty("accessToken");
+        String accessToken = System.getProperty("accessToken");
         assertNotNull(accessToken);
+        Webmaster webmaster = new Webmaster(accessToken);
+        hosts = webmaster.getHosts();
     }
 
     @Test
-    public void testWebmaster() throws Exception {
-        Webmaster webmaster = new Webmaster(accessToken, 100500);
-        List<Host> hosts = webmaster.getHosts();
-
+    public void testBasicInfo() throws Exception {
         for (Host host : hosts) {
             assertNotNull("Host's URL is null", host.getUrl());
             Verification verification = host.getVerification();
@@ -38,20 +38,18 @@ public class WebmasterTest {
                         verification.getVerificationRefusalDetails());
             }
             Crawling crawling = host.getCrawling();
-            assertNotNull("Crawling is null", crawling);
-            assertNotNull("Crawling state is null", crawling.getCrawlingState());
-            if (crawling.getCrawlingState() == CrawlingState.NOT_INDEXED) {
-                assertNotNull("Crawling denial details", crawling.getCrawlingDenialDetails());
+            if (crawling != null) {
+                assertNotNull("Crawling state is null", crawling.getCrawlingState());
+                if (crawling.getCrawlingState() == CrawlingState.NOT_INDEXED) {
+                    assertNotNull("Crawling denial details", crawling.getCrawlingDenialDetails());
+                }
+                if (crawling.getCrawlingState() == CrawlingState.INDEXED) {
+                    assertTrue("Index count < 0", host.getIndexCount() >= 0);
+                    assertTrue("URL count < 0", host.getUrlCount() >= 0);
+                    assertTrue("TCY < 0", host.getTcy() >= 0);
+                    assertNotNull("Last access date is null", host.getLastAccess());
+                }
             }
-            if (verification.getVerificationStatus() == VerificationStatus.VERIFIED) {
-                assertTrue("Index count < 0", host.getIndexCount() >= 0);
-                assertTrue("URL count < 0", host.getUrlCount() >= 0);
-                assertTrue("TCY < 0", host.getTcy() >= 0);
-            }
-            assertNotNull("Last access date is null", host.getLastAccess());
         }
-
-        logger.debug("Hosts: {}", hosts);
     }
-
 }

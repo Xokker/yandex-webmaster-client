@@ -7,6 +7,7 @@ package ru.webeffector.host;
  * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/hosts-stats.xml
  *
  * @author Ernest Sadykov
+ * @since 10.03.2014
  */
 public class Stats {
     private int urlErrorsCount;

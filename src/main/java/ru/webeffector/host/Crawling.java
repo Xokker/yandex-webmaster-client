@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.*;
 
 /**
  * @author Ernest Sadykov
+ * @since 12.03.2014
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Crawling {
