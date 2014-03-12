@@ -46,9 +46,9 @@ public class Webmaster {
     public List<Host> getHosts() {
         HostList hostList = makeRequest(getHostsUrl());
         List<Host> hosts = hostList.hosts;
-        for (Host host : hosts) {
-            host.setWebmaster(this);
-        }
+//        for (Host host : hosts) {
+//            hos(this);
+//        }
         return hosts;
     }
 

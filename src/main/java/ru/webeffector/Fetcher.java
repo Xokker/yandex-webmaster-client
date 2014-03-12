@@ -21,7 +21,6 @@ class Fetcher {
     private static final Logger logger = LoggerFactory.getLogger(Fetcher.class);
 
     private JAXBContext jaxbContext;
-    private String hostsUrl;
     private CloseableHttpClient httpClient = HttpClients.createDefault();
 
     private JAXBContext getJaxbContext() {
