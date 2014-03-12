@@ -1,6 +1,11 @@
 package ru.webeffector.host;
 
 /**
+ * Class represents site statistics.
+ *
+ * API docs [EN]: http://api.yandex.com/webmaster/doc/dg/reference/hosts-stats.xml
+ * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/hosts-stats.xml
+ *
  * @author Ernest Sadykov
  */
 public class Stats {

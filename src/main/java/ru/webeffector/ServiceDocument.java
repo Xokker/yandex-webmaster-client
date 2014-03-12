@@ -5,6 +5,11 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
+ * Represents service document of the webmaster API.
+ *
+ * API docs [EN]: http://api.yandex.com/webmaster/doc/dg/tasks/how-to-get-service-document.xml
+ * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/tasks/how-to-get-service-document.xml
+ *
  * @author Ernest Sadykov
  */
 @XmlRootElement(name = "service")

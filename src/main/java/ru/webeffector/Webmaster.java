@@ -1,24 +1,10 @@
 package ru.webeffector;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.joda.time.DateTime;
-import org.joda.time.Interval;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.webeffector.host.Host;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -73,6 +59,9 @@ public class Webmaster {
      * Returns list of hosts. If hosts are not downloaded, method
      * downloads them.
      *
+     * API docs [EN]: http://api.yandex.com/webmaster/doc/dg/reference/hosts.xml
+     * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/hosts.xml
+     *
      * @return list of hosts
      */
     public List<Host> getHosts() {
@@ -80,11 +69,5 @@ public class Webmaster {
             hosts = Fetcher.getHosts(accessToken);
         }
         return hosts;
-    }
-
-    public static void main(String[] args) {
-        Webmaster webmaster = new Webmaster("sdgsdg");
-        List<Host> hosts = webmaster.getHosts();
-        System.out.println("Hosts: " + hosts);
     }
 }

@@ -14,8 +14,6 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 /**
@@ -87,50 +85,6 @@ class Fetcher {
             logger.error("jaxb error", e);
         }
         return null;
-    }
-
-    public static void main(String[] args) {
-        final String serviceDocumentUrl = "https://webmaster.yandex.ru/api/v2";
-        String token = "sdfdsfs";
-
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpGet httpGet = new HttpGet(serviceDocumentUrl);
-        httpGet.addHeader("Authorization", "OAuth " + token);
-        String hostsUrl;
-        try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
-            JAXBContext jc = JAXBContext.newInstance(ServiceDocument.class);
-            Unmarshaller unmarshaller = jc.createUnmarshaller();
-
-            ServiceDocument serviceDocument = (ServiceDocument)unmarshaller.unmarshal(response.getEntity().getContent());
-            hostsUrl = serviceDocument.getHostsUrl();
-        } catch (IOException e) {
-            logger.error("xkjn", e);
-            return;
-        } catch (JAXBException e) {
-            logger.error("jaxb error", e);
-            return;
-        }
-
-        List<Host> hosts;
-
-        try {
-            httpGet.setURI(new URI(hostsUrl));
-        } catch (URISyntaxException e) {
-            logger.error("should not happened", e);
-            return;
-        }
-        try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
-            JAXBContext jc = JAXBContext.newInstance(HostList.class);
-            Unmarshaller unmarshaller = jc.createUnmarshaller();
-
-            HostList hostList = (HostList)unmarshaller.unmarshal(response.getEntity().getContent());
-            hosts = hostList.hosts;
-            logger.debug("Hosts: {}", hosts);
-        } catch (IOException e) {
-            logger.error("xkjn", e);
-        } catch (JAXBException e) {
-            logger.error("jaxb error", e);
-        }
     }
 }
 

@@ -1,19 +1,28 @@
 package ru.webeffector.host;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import javax.xml.bind.annotation.*;
 
 /**
+ * Class represents information about site (host) verification.
+ *
+ * API docs [EN]: http://api.yandex.com/webmaster/doc/dg/reference/hosts-verify.xml
+ * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/hosts-verify.xml
+ *
  * @author Ernest Sadykov
+ * @see ru.webeffector.host.Host
  */
-
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Verification {
     @XmlAttribute(name = "state")
     private VerificationStatus verificationStatus;
+
+    @XmlElement(name = "details")
+    private VerificationRefusalDetails verificationRefusalDetails;
+
     private String uin;
     // ...
 
@@ -23,6 +32,14 @@ public class Verification {
 
     public void setVerificationStatus(VerificationStatus verificationStatus) {
         this.verificationStatus = verificationStatus;
+    }
+
+    public VerificationRefusalDetails getVerificationRefusalDetails() {
+        return verificationRefusalDetails;
+    }
+
+    public void setVerificationRefusalDetails(VerificationRefusalDetails verificationRefusalDetails) {
+        this.verificationRefusalDetails = verificationRefusalDetails;
     }
 
     public String getUin() {
@@ -35,9 +52,10 @@ public class Verification {
 
     @Override
     public String toString() {
-        return "Verification{" +
-                "verificationStatus=" + verificationStatus +
-                ", uin='" + uin + '\'' +
-                '}';
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("uin", uin)
+                .append("verificationRefusalDetails", verificationRefusalDetails)
+                .append("verificationStatus", verificationStatus)
+                .toString();
     }
 }

@@ -1,15 +1,21 @@
 package ru.webeffector.host;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joda.time.DateTime;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.net.URL;
 
 /**
+ * Class represents host.
+ *
+ * API docs [EN]: http://api.yandex.com/webmaster/doc/dg/reference/hosts.xml
+ * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/hosts.xml
+ *
  * @author Ernest Sadykov
  */
 @XmlRootElement
@@ -42,10 +48,15 @@ public class Host {
     private int tcy = -1;
 
     private Stats stats;
+
     private IndexInfo indexInfo;
 
     @XmlElement
     private Verification verification;
+
+    @XmlElement(name = "crawling")
+    private Crawling crawling;
+
     private History tcyHistory;
     // ...
 
@@ -56,30 +67,57 @@ public class Host {
         return stats.getUrlCount();
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean isVirused() {
+        return virused;
+    }
+
+    public DateTime getLastAccess() {
+        return lastAccess;
+    }
+
+    public int getIndexCount() {
+        return indexCount;
+    }
+
+    public int getTcy() {
+        return tcy;
+    }
+
+    public IndexInfo getIndexInfo() {
+        return indexInfo;
+    }
+
+    public Verification getVerification() {
+        return verification;
+    }
+
+    public Crawling getCrawling() {
+        return crawling;
+    }
+
     @Override
     public String toString() {
-        return "Host{" +
-                "url='" + url + '\'' +
-                ", name='" + name + '\'' +
-                ", virused=" + virused +
-                ", lastAccess=" + lastAccess +
-                ", urlCount=" + urlCount +
-                ", indexCount=" + indexCount +
-                ", tcy=" + tcy +
-                ", verification=" + verification +
-                '}';
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("url", url)
+                .append("name", name)
+                .append("virused", virused)
+                .append("lastAccess", lastAccess)
+                .append("urlCount", urlCount)
+                .append("indexCount", indexCount)
+                .append("tcy", tcy)
+                .append("stats", stats)
+                .append("indexInfo", indexInfo)
+                .append("verification", verification)
+                .append("crawling", crawling)
+                .append("tcyHistory", tcyHistory)
+                .toString();
     }
-}
-
-class DateTimeAdapter extends XmlAdapter<String, DateTime> {
-    @Override
-    public DateTime unmarshal(String v) throws Exception {
-        return new DateTime(v);
-    }
-
-    @Override
-    public String marshal(DateTime v) throws Exception {
-        return v.toString();
-    }
-
 }
