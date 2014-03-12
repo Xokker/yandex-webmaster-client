@@ -1,4 +1,4 @@
-package ru.webeffector.host;
+package ru.webeffector;
 
 /**
  * Reasons for refusal to verify site management rights.

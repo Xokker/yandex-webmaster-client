@@ -2,7 +2,6 @@ package ru.webeffector;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.webeffector.host.Host;
 
 import java.util.List;
 
@@ -15,6 +14,7 @@ import java.util.List;
  */
 public class Webmaster {
     private final static Logger logger = LoggerFactory.getLogger(Webmaster.class);
+    private static final String WEBMASTER_API_URL = "https://webmaster.yandex.ru/api/v2";
 
     private final String accessToken;
     private final Fetcher fetcher;
@@ -29,6 +29,11 @@ public class Webmaster {
         this.fetcher = new Fetcher();
     }
 
+    private String getHostsUrl() {
+        ServiceDocument serviceDocument = makeRequest(WEBMASTER_API_URL);
+        return serviceDocument == null ? null : serviceDocument.getHostsUrl();
+    }
+
     /**
      * Returns list of hosts. If hosts are not downloaded, method
      * downloads them.
@@ -39,10 +44,15 @@ public class Webmaster {
      * @return list of hosts
      */
     public List<Host> getHosts() {
-        List<Host> hosts = fetcher.getHosts(accessToken);
+        HostList hostList = makeRequest(getHostsUrl());
+        List<Host> hosts = hostList.hosts;
         for (Host host : hosts) {
             host.setWebmaster(this);
         }
         return hosts;
+    }
+
+    <T> T makeRequest(String url) {
+        return fetcher.makeRequest(url, accessToken);
     }
 }

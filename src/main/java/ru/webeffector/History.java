@@ -1,9 +1,8 @@
-package ru.webeffector.host;
+package ru.webeffector;
 
 import org.joda.time.DateTime;
-import org.joda.time.YearMonth;
 
-import java.util.*;
+import java.util.SortedMap;
 
 /**
  * @author Ernest Sadykov

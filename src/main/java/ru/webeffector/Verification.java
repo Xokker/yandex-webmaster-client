@@ -1,4 +1,4 @@
-package ru.webeffector.host;
+package ru.webeffector;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.*;
  * @author Ernest Sadykov
  * @since 10.03.2014
  *
- * @see ru.webeffector.host.Host
+ * @see Host
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)

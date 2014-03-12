@@ -4,11 +4,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.webeffector.host.*;
-
-import static org.junit.Assert.*;
 
 import java.util.List;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Ernest Sadykov
@@ -49,6 +49,15 @@ public class WebmasterTest {
                     assertTrue("TCY < 0", host.getTcy() >= 0);
                     assertNotNull("Last access date is null", host.getLastAccess());
                 }
+            }
+        }
+    }
+
+    @Test
+    public void testAdditionalInfo() throws Exception {
+        for (Host host : hosts) {
+            if (host.getVerification().getVerificationStatus() == VerificationStatus.VERIFIED) {
+                assertNotNull("", host.getUrlErrors());
             }
         }
     }

@@ -1,4 +1,4 @@
-package ru.webeffector.host;
+package ru.webeffector;
 
 import org.joda.time.DateTime;
 

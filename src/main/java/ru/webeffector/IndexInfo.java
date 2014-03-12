@@ -1,4 +1,4 @@
-package ru.webeffector.host;
+package ru.webeffector;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -19,6 +19,7 @@ import java.util.List;
  */
 @XmlRootElement(name = "host")
 public class IndexInfo {
+
     private static class Urls {
         @XmlElement(name = "url")
         private List<URL> indexedUrls;
@@ -36,6 +37,10 @@ public class IndexInfo {
 
     public List<URL> getIndexedUrls() {
         return urls.indexedUrls;
+    }
+
+    void setIndexCount(Integer indexCount) {
+        this.indexCount = indexCount;
     }
 
     @Override
