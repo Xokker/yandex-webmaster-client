@@ -3,10 +3,9 @@
   <groupId>ru.webeffector</groupId>
   <artifactId>webmaster-client</artifactId>
   <versioning>
-    <release>0.1.1</release>
     <versions>
-      <version>0.1.1</version>
+      <version>0.2-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20140313151022</lastUpdated>
+    <lastUpdated>20140313162748</lastUpdated>
   </versioning>
 </metadata>
