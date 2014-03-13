@@ -6,47 +6,68 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xml.sax.InputSource;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 import java.io.IOException;
 
 /**
+ * Fetches information from the the given source and maps it to the given class.
+ *
  * @author Ernest Sadykov
  * @since 11.03.2014
  */
 class Fetcher {
     private static final Logger logger = LoggerFactory.getLogger(Fetcher.class);
 
-    private JAXBContext jaxbContext;
+    private JAXBContext context;
+    private XMLInputFactory factory = XMLInputFactory.newInstance();
     private CloseableHttpClient httpClient = HttpClients.createDefault();
 
     private JAXBContext getJaxbContext() {
-        if (jaxbContext == null) {
+        if (context == null) {
             try {
-                jaxbContext = JAXBContext.newInstance(ServiceDocument.class,
-                        HostList.class, Links.class, Host.class);
+                context = JAXBContext.newInstance(ServiceDocument.class,
+                        HostList.class, Links.class, Host.class, HostStats.class,
+                        IndexInfo.class);
             } catch (JAXBException e) {
                 logger.error("Cannot get JAXB context", e);
             }
         }
-        return jaxbContext;
+        return context;
     }
 
-    <T> T makeRequest(String url, String accessToken) {
+    <T> T makeRequest(String url, String accessToken, Class<T> clazz) {
         HttpGet httpGet = new HttpGet(url);
         httpGet.setHeader("Authorization", "OAuth " + accessToken);
         T result = null;
         try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
             Unmarshaller unmarshaller = getJaxbContext().createUnmarshaller();
             if (response.getStatusLine().getStatusCode() != 200) {
-                logger.error("Error during fetching: " + response.getStatusLine().getReasonPhrase());
+                logger.error("Error during fetching [URL={}]: {}", url, response.getStatusLine().getReasonPhrase());
                 return null;
             }
-            InputSource inputSource = new InputSource(response.getEntity().getContent());
-            result = (T) unmarshaller.unmarshal(inputSource);
+
+            XMLStreamReader reader = null;
+            try {
+                reader = factory.createXMLStreamReader(response.getEntity().getContent());
+            } catch (XMLStreamException e) {
+                logger.error("Error during creating XMLStreamReader.", e);
+            }
+            result =  unmarshaller.unmarshal(reader, clazz).getValue();
+
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (XMLStreamException e) {
+                logger.error("Error during closing XMLStreamReader", e);
+            }
+
             logger.debug("Downloaded content: {}", result);
         } catch (IOException e) {    // TODO: what to do with exceptions?
             logger.error("Exception during downloading. [URL=" + url + "]", e);

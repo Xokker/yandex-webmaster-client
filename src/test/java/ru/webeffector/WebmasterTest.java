@@ -1,6 +1,6 @@
 package ru.webeffector;
 
-import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author Ernest Sadykov
@@ -18,7 +17,7 @@ public class WebmasterTest {
     private static final Logger logger = LoggerFactory.getLogger(WebmasterTest.class);
     private static List<Host> hosts;
 
-    @BeforeClass
+//    @BeforeClass
     public static void setUp() throws Exception {
         String accessToken = System.getProperty("accessToken");
         assertNotNull(accessToken);
@@ -27,16 +26,32 @@ public class WebmasterTest {
     }
 
     @Test
+    @Ignore
     public void testBasicInfo() throws Exception {
         for (Host host : hosts) {
-            assertTrue(true);
+            assertNotNull("Url is null", host.getUrl());
+            logger.trace("url: {}", host.getUrl());
         }
     }
 
     @Test
+    @Ignore
+    public void testHostStats() throws Exception {
+        for (Host host : hosts) {
+            assertNotNull("Name is null", host.stats().getName());
+        }
+    }
+
+    @Test
+    @Ignore
     public void testAdditionalInfo() throws Exception {
         for (Host host : hosts) {
-            assertTrue(true);
+            IndexInfo indexInfo = host.indexed();
+            if (indexInfo != null) {
+                assertNotNull("indexCount is not initialized", indexInfo.getIndexCount());
+                logger.trace("indexCount: {}", indexInfo.getIndexCount());
+                assertNotNull("links is not fetched", indexInfo.getIndexedUrls());
+            }
         }
     }
 }

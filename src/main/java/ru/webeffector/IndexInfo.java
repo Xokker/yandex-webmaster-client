@@ -5,7 +5,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.net.URL;
 import java.util.List;
 
 /**
@@ -21,12 +20,16 @@ import java.util.List;
 public class IndexInfo {
 
     private static class Urls {
+        private List<String> indexedUrls;
+
         @XmlElement(name = "url")
-        private List<URL> indexedUrls;
+        private List<String> getIndexedUrls() { return indexedUrls; }
+        private void setIndexedUrls(List<String> u) {
+            indexedUrls = u; }
     }
 
     @XmlElement(name = "index-count")
-    private int indexCount;
+    private Integer indexCount;
 
     @XmlElement(name = "last-week-index-urls")
     private Urls urls;
@@ -35,12 +38,16 @@ public class IndexInfo {
         return indexCount;
     }
 
-    public List<URL> getIndexedUrls() {
+    public List<String> getIndexedUrls() {
         return urls.indexedUrls;
     }
 
-    void setIndexCount(Integer indexCount) {
+    public void setIndexCount(Integer indexCount) {
         this.indexCount = indexCount;
+    }
+
+    public void setIndexedUrls(List<String> urls) {
+        this.urls.indexedUrls = urls;
     }
 
     @Override

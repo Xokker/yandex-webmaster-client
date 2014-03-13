@@ -13,7 +13,7 @@ import java.util.List;
 @XmlRootElement(name = "host")
 class Links {
 
-    private static class Link {
+    static class Link {
         @XmlAttribute(name = "rel")
         private String key;
         @XmlAttribute(name = "href")
@@ -21,13 +21,17 @@ class Links {
     }
 
     private List<Link> links;
-    private EnumMap<LinkType, String> linksMap;
+    private EnumMap<LinkType, String> linksMap = new EnumMap<>(LinkType.class);
 
     public String get(LinkType linkType) {
         return linksMap.get(linkType);
     }
 
     @XmlElement(name = "link")
+    private List<Link> getLinks() {
+        return links;
+    }
+
     private void setLinks(List<Link> links) {
         for (Link link : links) {
             linksMap.put(LinkType.valueOf(link.key.replace('-', '_')), link.value);

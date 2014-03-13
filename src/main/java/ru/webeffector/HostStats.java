@@ -4,9 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joda.time.DateTime;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
@@ -19,6 +17,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * @since 10.03.2014
  */
 @XmlRootElement(name = "host")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class HostStats {
 
     @XmlAttribute(name = "href")

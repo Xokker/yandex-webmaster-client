@@ -30,7 +30,7 @@ public class Webmaster {
     }
 
     private String getHostsUrl() {
-        ServiceDocument serviceDocument = makeRequest(WEBMASTER_API_URL);
+        ServiceDocument serviceDocument = makeRequest(WEBMASTER_API_URL, ServiceDocument.class);
         return serviceDocument == null ? null : serviceDocument.getHostsUrl();
     }
 
@@ -44,15 +44,15 @@ public class Webmaster {
      * @return list of hosts
      */
     public List<Host> getHosts() {
-        HostList hostList = makeRequest(getHostsUrl());
+        HostList hostList = makeRequest(getHostsUrl(), HostList.class);
         List<Host> hosts = hostList.hosts;
-//        for (Host host : hosts) {
-//            hos(this);
-//        }
+        for (Host host : hosts) {
+            host.setWebmaster(this);
+        }
         return hosts;
     }
 
-    <T> T makeRequest(String url) {
-        return fetcher.makeRequest(url, accessToken);
+    <T> T makeRequest(String url, Class<T> clazz) {
+        return fetcher.makeRequest(url, accessToken, clazz);
     }
 }
