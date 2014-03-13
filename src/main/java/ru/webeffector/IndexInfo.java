@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,12 +21,8 @@ import java.util.List;
 public class IndexInfo {
 
     private static class Urls {
-        private List<String> indexedUrls;
-
         @XmlElement(name = "url")
-        private List<String> getIndexedUrls() { return indexedUrls; }
-        private void setIndexedUrls(List<String> u) {
-            indexedUrls = u; }
+        private List<String> indexedUrls = new ArrayList<>();
     }
 
     @XmlElement(name = "index-count")
