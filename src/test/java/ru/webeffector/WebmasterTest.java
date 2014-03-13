@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
@@ -17,7 +16,6 @@ import static org.junit.Assert.assertNotNull;
 public class WebmasterTest {
     private static final Logger logger = LoggerFactory.getLogger(WebmasterTest.class);
     private static List<Host> hosts;
-    private static List<Verification> verifications = new ArrayList<>();
 
     @BeforeClass
     public static void setUp() throws Exception {
@@ -25,6 +23,7 @@ public class WebmasterTest {
         assertNotNull(accessToken);
         Webmaster webmaster = new Webmaster(accessToken);
         hosts = webmaster.getHosts();
+        assertNotNull("Hosts is not fetched", hosts);
     }
 
     @Test
@@ -41,7 +40,6 @@ public class WebmasterTest {
             Verification verification = host.verify();
             assertNotNull("Verification is null [" + host.getUrl() + "]",
                     verification);
-            verifications.add(verification);
             switch (verification.getVerificationState()) {
                 case VERIFIED:
                     assertNotNull("Cancellation possibility is null",
@@ -58,7 +56,6 @@ public class WebmasterTest {
 
             }
         }
-        assert hosts.size() == verifications.size() : "Not all verifications fetched!";
     }
 
     @Test
@@ -77,6 +74,17 @@ public class WebmasterTest {
                 assertNotNull("indexCount is not initialized", indexInfo.getIndexCount());
                 logger.trace("indexCount: {}", indexInfo.getIndexCount());
                 assertNotNull("links is not fetched", indexInfo.getUrls());
+            }
+        }
+    }
+
+    @Test
+    public void testTops() throws Exception {
+        for (Host host : hosts) {
+            Verification verification = host.verify();
+            if (verification.getVerificationState() == VerificationState.VERIFIED) {
+                Tops tops = host.tops();
+                assertNotNull("Tops is not fetched", tops);
             }
         }
     }

@@ -33,7 +33,7 @@ class Fetcher {
             try {
                 context = JAXBContext.newInstance(ServiceDocument.class,
                         HostList.class, Links.class, Host.class, HostStats.class,
-                        IndexInfo.class, Verification.class);
+                        IndexInfo.class, Verification.class, Tops.class);
             } catch (JAXBException e) {
                 logger.error("Cannot get JAXB context", e);
             }

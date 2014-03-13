@@ -52,8 +52,8 @@ public class Host {
      * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/host-tops.xml
      * @return
      */
-    public TopQueries tops() {
-        return makeRequest(LinkType.top_queries, TopQueries.class);
+    public Tops tops() {
+        return makeRequest(LinkType.top_queries, Tops.class);
     }
 
     /**
