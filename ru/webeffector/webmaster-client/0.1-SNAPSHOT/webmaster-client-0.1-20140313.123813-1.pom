@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>webmaster-client</groupId>
+    <groupId>ru.webeffector</groupId>
     <artifactId>webmaster-client</artifactId>
     <version>0.1-SNAPSHOT</version>
 
@@ -78,12 +78,12 @@
                 <artifactId>site-maven-plugin</artifactId>
                 <version>0.8</version>
                 <configuration>
-                    <message>Maven artifacts for ${project.version}</message>  <!-- git commit message -->
-                    <noJekyll>true</noJekyll>                                  <!-- disable webpage processing -->
-                    <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory> <!-- matches distribution management repository url above -->
-                    <branch>refs/heads/mvn-repo</branch>                       <!-- remote branch name -->
+                    <message>Maven artifacts for ${project.version}</message>
+                    <noJekyll>true</noJekyll>
+                    <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
+                    <branch>refs/heads/mvn-repo</branch>
                     <includes><include>**/*</include></includes>
-                    <repositoryName>yandex-webmaster-client</repositoryName>      <!-- github repo name -->
+                    <repositoryName>yandex-webmaster-client</repositoryName>
                     <repositoryOwner>Xokker</repositoryOwner>
                 </configuration>
                 <executions>
