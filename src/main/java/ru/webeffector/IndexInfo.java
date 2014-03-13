@@ -3,9 +3,7 @@ package ru.webeffector;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
+import javax.xml.bind.annotation.*;
 import java.util.List;
 
 /**
@@ -18,33 +16,30 @@ import java.util.List;
  * @since 12.03.2014
  */
 @XmlRootElement(name = "host")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class IndexInfo {
-
-    private static class Urls {
-        @XmlElement(name = "url")
-        private List<String> indexedUrls = new ArrayList<>();
-    }
 
     @XmlElement(name = "index-count")
     private Integer indexCount;
 
-    @XmlElement(name = "last-week-index-urls")
-    private Urls urls;
+    @XmlElementWrapper(name = "last-week-index-urls")
+    @XmlElement(name = "url")
+    private List<String> urls;
 
-    public int getIndexCount() {
+    public Integer getIndexCount() {
         return indexCount;
-    }
-
-    public List<String> getIndexedUrls() {
-        return urls.indexedUrls;
     }
 
     public void setIndexCount(Integer indexCount) {
         this.indexCount = indexCount;
     }
 
-    public void setIndexedUrls(List<String> urls) {
-        this.urls.indexedUrls = urls;
+    public List<String> getUrls() {
+        return urls;
+    }
+
+    public void setUrls(List<String> urls) {
+        this.urls = urls;
     }
 
     @Override

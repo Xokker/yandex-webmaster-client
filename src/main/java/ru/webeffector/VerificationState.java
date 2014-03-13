@@ -10,7 +10,7 @@ package ru.webeffector;
  * @since 12.03.2014
  */
 
-public enum VerificationStatus {
+public enum VerificationState {
     IN_PROGRESS("Checking site management rights"),
     NEVER_VERIFIED("Site management rights have not been verified previously"),
     VERIFICATION_FAILED("Error in verifying rights"),
@@ -19,7 +19,7 @@ public enum VerificationStatus {
 
     private final String description;
 
-    VerificationStatus(String description) {
+    VerificationState(String description) {
         this.description = description;
     }
 
