@@ -104,13 +104,14 @@
                 <artifactId>site-maven-plugin</artifactId>
                 <version>0.8</version>
                 <configuration>
-                    <message>Added javadocs and sources.</message>
+                    <message>Added 0.2-SNAPSHOT.</message>
                     <noJekyll>true</noJekyll>
                     <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
                     <branch>refs/heads/mvn-repo</branch>
                     <includes><include>**/*</include></includes>
                     <repositoryName>yandex-webmaster-client</repositoryName>
                     <repositoryOwner>Xokker</repositoryOwner>
+                    <merge>true</merge>
                 </configuration>
                 <executions>
                     <execution>
