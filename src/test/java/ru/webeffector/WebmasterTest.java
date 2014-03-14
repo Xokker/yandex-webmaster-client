@@ -30,6 +30,7 @@ public class WebmasterTest {
     public void testBasicInfo() throws Exception {
         for (Host host : hosts) {
             assertNotNull("Url is null", host.getUrl());
+            assertNotNull("Name is null", host.getName());
             logger.trace("url: {}", host.getUrl());
         }
     }
@@ -73,8 +74,21 @@ public class WebmasterTest {
             if (indexInfo != null) {
                 assertNotNull("indexCount is not initialized", indexInfo.getIndexCount());
                 logger.trace("indexCount: {}", indexInfo.getIndexCount());
-                assertNotNull("links is not fetched", indexInfo.getUrls());
+                List<String> urls = indexInfo.getUrls();
+                assertNotNull("links is not fetched", urls);
+                for (String url : urls) {
+                    assertNotNull("Url is null", url);
+                }
             }
+        }
+    }
+
+    private void testTopEntities(List<TopEntity> entities) {
+        for (TopEntity topEntity : entities) {
+            assertNotNull("query text is null", topEntity.getQueryText());
+            assertNotNull("query count is null", topEntity.getCount());
+            assertNotNull("query position is null", topEntity.getPosition());
+            assertNotNull("query's parameter 'is custom' is null", topEntity.isCustom());
         }
     }
 
@@ -84,7 +98,16 @@ public class WebmasterTest {
             Verification verification = host.verify();
             if (verification.getVerificationState() == VerificationState.VERIFIED) {
                 Tops tops = host.tops();
-                assertNotNull("Tops is not fetched", tops);
+                logger.trace("tops: {}", tops);
+                assertNotNull("tops is not fetched", tops);
+                assertNotNull("total shows count is null", tops.getTotalShowsCount());
+                assertNotNull("top shows percent is null", tops.getTopShowsPercent());
+                assertNotNull("top shows is null", tops.getTopShows());
+                testTopEntities(tops.getTopShows());
+                assertNotNull("total clicks count is null", tops.getTotalClicksCount());
+                assertNotNull("top clicks percent is null", tops.getTopClicksPercent());
+                assertNotNull("top clicks is null", tops.getTopClicks());
+                testTopEntities(tops.getTopClicks());
             }
         }
     }

@@ -3,18 +3,25 @@ package ru.webeffector;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import java.util.List;
 
 /**
  * @author Ernest Sadykov
  * @since 12.03.2014
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Host {
     private Webmaster webmaster;
 
     @XmlAttribute(name = "href")
     private String url;
+
+    @XmlElement
+    private String name;
 
     private Links links;
 
@@ -159,6 +166,14 @@ public class Host {
 
     void setWebmaster(Webmaster webmaster) {
         this.webmaster = webmaster;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

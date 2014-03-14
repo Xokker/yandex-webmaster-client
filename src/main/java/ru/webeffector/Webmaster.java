@@ -19,6 +19,12 @@ public class Webmaster {
     private final String accessToken;
     private final Fetcher fetcher;
 
+    // EclipseLink MOXy needs it.
+    private Webmaster() {
+        accessToken = "";
+        fetcher = null;
+    }
+
     /**
      * Creates Webmaster instance with permanent token.
      *

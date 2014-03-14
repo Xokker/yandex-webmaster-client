@@ -2,9 +2,13 @@ package ru.webeffector;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.eclipse.persistence.oxm.annotations.XmlPath;
 import org.joda.time.DateTime;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
@@ -22,31 +26,26 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Verification {
 
-    private static class VerificationDetails {
-        @XmlAttribute(name = "state")
-        private VerificationState verificationState;
+    @XmlPath("verification/@state")
+    private VerificationState verificationState;
 
-        @XmlElement(name = "type")
-        private VerificationConfirmationType verificationConfirmationType;
+    @XmlPath("verification/type/text()")
+    private VerificationConfirmationType verificationConfirmationType;
 
-        @XmlElement(name = "possible-to-cancel")
-        private Boolean cancellationPossibility;
+    @XmlPath("verification/possible-to-cancel/text()")
+    private Boolean cancellationPossibility;
 
-        @XmlElement
-        private String uin;
+    @XmlPath("verification/uin/text()")
+    private String uin;
 
-        @XmlElement
-        @XmlJavaTypeAdapter(DateTimeAdapter.class)
-        private DateTime date;
-    }
+    @XmlPath("verification/date/text()")
+    @XmlJavaTypeAdapter(DateTimeAdapter.class)
+    private DateTime date;
 
     @XmlElement
     private String name;
 
-    @XmlElement(name = "verification")
-    private VerificationDetails verificationDetails;
-
-    @XmlElement(name = "other-users-exist")
+    @XmlElement(name = "other-users-exist/text()")
     private Boolean otherUsersExist;
 
     public String getName() {
@@ -55,14 +54,6 @@ public class Verification {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public VerificationDetails getVerificationDetails() {
-        return verificationDetails;
-    }
-
-    public void setVerificationDetails(VerificationDetails verificationDetails) {
-        this.verificationDetails = verificationDetails;
     }
 
     public Boolean getOtherUsersExist() {
@@ -74,56 +65,55 @@ public class Verification {
     }
 
     public VerificationState getVerificationState() {
-        return verificationDetails.verificationState;
+        return verificationState;
     }
 
     public void setVerificationState(VerificationState verificationState) {
-        this.verificationDetails.verificationState = verificationState;
+        this.verificationState = verificationState;
     }
 
     public VerificationConfirmationType getVerificationConfirmationType() {
-        return verificationDetails.verificationConfirmationType;
+        return verificationConfirmationType;
     }
 
     public void setVerificationConfirmationType(VerificationConfirmationType verificationConfirmationType) {
-        this.verificationDetails.verificationConfirmationType = verificationConfirmationType;
+        this.verificationConfirmationType = verificationConfirmationType;
     }
 
     public Boolean getCancellationPossibility() {
-        return verificationDetails.cancellationPossibility;
+        return cancellationPossibility;
     }
 
     public void setCancellationPossibility(Boolean cancellationPossibility) {
-        this.verificationDetails.cancellationPossibility = cancellationPossibility;
+        this.cancellationPossibility = cancellationPossibility;
     }
 
     public String getUin() {
-        return verificationDetails.uin;
+        return uin;
     }
 
     public void setUin(String uin) {
-        this.verificationDetails.uin = uin;
+        this.uin = uin;
     }
 
     public DateTime getDate() {
-        return verificationDetails.date;
+        return date;
     }
 
     public void setDate(DateTime date) {
-        this.verificationDetails.date = date;
+        this.date = date;
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("verificationState", verificationState)
+                .append("verificationConfirmationType", verificationConfirmationType)
+                .append("cancellationPossibility", cancellationPossibility)
+                .append("uin", uin)
+                .append("date", date)
                 .append("name", name)
-                .append("verificationDetails", verificationDetails)
                 .append("otherUsersExist", otherUsersExist)
-                .append("verificationState", verificationDetails.verificationState)
-                .append("verificationConfirmationType", verificationDetails.verificationConfirmationType)
-                .append("cancellationPossibility", verificationDetails.cancellationPossibility)
-                .append("uin", verificationDetails.uin)
-                .append("date", verificationDetails.date)
                 .toString();
     }
 }

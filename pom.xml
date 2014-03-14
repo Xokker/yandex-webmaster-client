@@ -6,7 +6,7 @@
 
     <groupId>ru.webeffector</groupId>
     <artifactId>webmaster-client</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.1.4-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -50,6 +50,12 @@
             <artifactId>junit</artifactId>
             <version>4.8.2</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.moxy</artifactId>
+            <version>2.5.1</version>
         </dependency>
 
     </dependencies>
@@ -104,7 +110,7 @@
                 <artifactId>site-maven-plugin</artifactId>
                 <version>0.8</version>
                 <configuration>
-                    <message>Added 0.2-SNAPSHOT.</message>
+                    <message>Added name property to the Host model.</message>
                     <noJekyll>true</noJekyll>
                     <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
                     <branch>refs/heads/mvn-repo</branch>

@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @since 11.03.2014
  */
 @XmlRootElement(name = "service")
-class ServiceDocument {
+class ServiceDocument {        // TODO: refactor, use xpath
     static private class Collection {
         @XmlAttribute(name = "href")
         private String hostUrl;

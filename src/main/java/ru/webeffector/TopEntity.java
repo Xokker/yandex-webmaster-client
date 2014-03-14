@@ -1,5 +1,8 @@
 package ru.webeffector;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -64,7 +67,7 @@ public class TopEntity {
         this.position = position;
     }
 
-    public Boolean getCustom() {
+    public Boolean isCustom() {
         return custom;
     }
 
@@ -72,4 +75,14 @@ public class TopEntity {
         this.custom = custom;
     }
 
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("queryId", queryId)
+                .append("queryText", queryText)
+                .append("count", count)
+                .append("position", position)
+                .append("custom", custom)
+                .toString();
+    }
 }

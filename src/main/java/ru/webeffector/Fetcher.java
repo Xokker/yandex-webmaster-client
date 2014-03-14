@@ -5,6 +5,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.eclipse.persistence.jaxb.JAXBContextFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.webeffector.exception.WebmasterException;
@@ -16,6 +17,7 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import java.io.IOException;
+import java.util.Collections;
 
 /**
  * Fetches information from the the given source and maps it to the given class.
@@ -25,17 +27,20 @@ import java.io.IOException;
  */
 class Fetcher {
     private static final Logger logger = LoggerFactory.getLogger(Fetcher.class);
+    private static final Class[] CLASSES_TO_BE_BOUND = new Class[]{ServiceDocument.class,
+            HostList.class, Links.class, Host.class, HostStats.class,
+            IndexInfo.class, Verification.class, Tops.class};
 
     private JAXBContext context;
     private XMLInputFactory factory = XMLInputFactory.newInstance();
     private CloseableHttpClient httpClient = HttpClients.createDefault();
 
+
     private JAXBContext getJaxbContext() {
         if (context == null) {
             try {
-                context = JAXBContext.newInstance(ServiceDocument.class,
-                        HostList.class, Links.class, Host.class, HostStats.class,
-                        IndexInfo.class, Verification.class, Tops.class);
+                context = JAXBContextFactory.createContext(CLASSES_TO_BE_BOUND,
+                        Collections.emptyMap());
             } catch (JAXBException e) {
                 logger.error("Cannot get JAXB context", e);
             }

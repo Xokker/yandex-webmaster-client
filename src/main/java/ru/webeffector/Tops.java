@@ -1,7 +1,9 @@
 package ru.webeffector;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.eclipse.persistence.oxm.annotations.XmlPath;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
@@ -16,75 +18,81 @@ import java.util.List;
  */
 @XmlRootElement(name = "host")
 public class Tops {
-    private static class TopQueriesDetails {
-        @XmlElement(name = "total-shows-count")
-        private Integer totalShowsCount;
+    @XmlPath("top-queries/total-shows-count/text()")
+    private Integer totalShowsCount;
 
-        @XmlElement(name = "top-shows-percent")
-        private Integer topShowsPercent;
+    @XmlPath("top-queries/top-shows-percent/text()")
+    private Double topShowsPercent;
 
-        @XmlElementWrapper(name = "top-shows")
-        @XmlElement(name = "top-info")
-        private List<TopEntity> topShows;
+    @XmlPath("top-queries/top-shows/top-info")
+    private List<TopEntity> topShows;
 
-        @XmlElement(name = "total-clicks-count")
-        private Integer totalClicksCount;
+    @XmlPath("top-queries/total-clicks-count/text()")
+    private Integer totalClicksCount;
 
-        @XmlElement(name = "top-clicks-percent")
-        private Integer topClicksPercent;
+    @XmlPath("top-queries/top-clicks-percent/text()")
+    private Double topClicksPercent;
 
-        @XmlElementWrapper(name = "top-clicks")
-        @XmlElement(name = "top-info")
-        private List<TopEntity> topClicks;
-    }
-
-    private TopQueriesDetails topQueriesDetails;
+    @XmlPath("top-queries/top-clicks/top-info")
+    private List<TopEntity> topClicks;
 
     public Integer getTotalShowsCount() {
-        return topQueriesDetails.totalShowsCount;
+        return totalShowsCount;
     }
 
     public void setTotalShowsCount(Integer totalShowsCount) {
-        this.topQueriesDetails.totalShowsCount = totalShowsCount;
+        this.totalShowsCount = totalShowsCount;
     }
 
-    public Integer getTopShowsPercent() {
-        return topQueriesDetails.topShowsPercent;
+    public Double getTopShowsPercent() {
+        return topShowsPercent;
     }
 
-    public void setTopShowsPercent(Integer topShowsPercent) {
-        this.topQueriesDetails.topShowsPercent = topShowsPercent;
+    public void setTopShowsPercent(Double topShowsPercent) {
+        this.topShowsPercent = topShowsPercent;
     }
 
     public List<TopEntity> getTopShows() {
-        return topQueriesDetails.topShows;
+        return topShows;
     }
 
     public void setTopShows(List<TopEntity> topShows) {
-        this.topQueriesDetails.topShows = topShows;
+        this.topShows = topShows;
     }
 
     public Integer getTotalClicksCount() {
-        return topQueriesDetails.totalClicksCount;
+        return totalClicksCount;
     }
 
     public void setTotalClicksCount(Integer totalClicksCount) {
-        this.topQueriesDetails.totalClicksCount = totalClicksCount;
+        this.totalClicksCount = totalClicksCount;
     }
 
-    public Integer getTopClicksPercent() {
-        return topQueriesDetails.topClicksPercent;
+    public Double getTopClicksPercent() {
+        return topClicksPercent;
     }
 
-    public void setTopClicksPercent(Integer topClicksPercent) {
-        this.topQueriesDetails.topClicksPercent = topClicksPercent;
+    public void setTopClicksPercent(Double topClicksPercent) {
+        this.topClicksPercent = topClicksPercent;
     }
 
     public List<TopEntity> getTopClicks() {
-        return topQueriesDetails.topClicks;
+        return topClicks;
     }
 
     public void setTopClicks(List<TopEntity> topClicks) {
-        this.topQueriesDetails.topClicks = topClicks;
+        this.topClicks = topClicks;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("totalShowsCount", totalShowsCount)
+                .append("topShowsPercent", topShowsPercent)
+                .append("topShows", topShows)
+                .append("totalClicksCount", totalClicksCount)
+                .append("topClicksPercent", topClicksPercent)
+                .append("topClicks", topClicks)
+                .toString();
     }
 }
