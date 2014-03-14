@@ -110,7 +110,7 @@
                 <artifactId>site-maven-plugin</artifactId>
                 <version>0.8</version>
                 <configuration>
-                    <message>Added name property to the Host model.</message>
+                    <message>EclipseLink MOXy is new JAXB provider.</message>
                     <noJekyll>true</noJekyll>
                     <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
                     <branch>refs/heads/mvn-repo</branch>

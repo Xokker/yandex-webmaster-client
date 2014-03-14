@@ -4,7 +4,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joda.time.DateTime;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
@@ -19,9 +22,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlRootElement(name = "host")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class HostStats {
-
-    @XmlAttribute(name = "href")
-    private String url;
 
     @XmlElement
     private String name;
@@ -53,14 +53,6 @@ public class HostStats {
 
     @XmlElement(name = "url-errors")
     private Integer urlErrors;
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
 
     public String getName() {
         return name;
@@ -145,7 +137,6 @@ public class HostStats {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("url", url)
                 .append("type", name)
                 .append("virused", virused)
                 .append("lastAccess", lastAccess)

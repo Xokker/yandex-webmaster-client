@@ -63,7 +63,26 @@ public class WebmasterTest {
     public void testHostStats() throws Exception {
         for (Host host : hosts) {
             HostStats hostStats = host.stats();
-            assertNotNull("Name is null", hostStats.getName());
+            assertNotNull("name is null", hostStats.getName());
+            Verification verification = host.verify();
+            if (verification.getVerificationState() == VerificationState.VERIFIED) {
+                assertNotNull("virused is null", hostStats.getVirused());
+                assertNotNull("last access is null", hostStats.getLastAccess());
+                Crawling crawling = hostStats.getCrawling();
+                assertNotNull("crawling is null", crawling);
+                assertNotNull("crawling state is null", crawling.getCrawlingState());
+                if (crawling.getCrawlingState() == CrawlingState.INDEXED) {
+                    assertNotNull("index count is null", hostStats.getIndexCount());
+                    assertNotNull("internal links count is null", hostStats.getInternalLinksCount());
+                    assertNotNull("links count is null", hostStats.getLinksCount());
+                    assertNotNull("tcy is null", hostStats.getTcy());
+                    assertNotNull("url count is null", hostStats.getUrlCount());
+                    assertNotNull("url errors is null", hostStats.getUrlErrors());
+                } else if (crawling.getCrawlingState() == CrawlingState.NOT_INDEXED) {
+                    assertNotNull("crawling denial details is null",
+                            crawling.getCrawlingDenialDetails());
+                }
+            }
         }
     }
 
@@ -73,7 +92,6 @@ public class WebmasterTest {
             IndexInfo indexInfo = host.indexed();
             if (indexInfo != null) {
                 assertNotNull("indexCount is not initialized", indexInfo.getIndexCount());
-                logger.trace("indexCount: {}", indexInfo.getIndexCount());
                 List<String> urls = indexInfo.getUrls();
                 assertNotNull("links is not fetched", urls);
                 for (String url : urls) {
@@ -98,7 +116,8 @@ public class WebmasterTest {
             Verification verification = host.verify();
             if (verification.getVerificationState() == VerificationState.VERIFIED) {
                 Tops tops = host.tops();
-                logger.trace("tops: {}", tops);
+                logger.trace("tops [Host={},{}]: {}", host.getName(),
+                        host.getUrl(), tops);
                 assertNotNull("tops is not fetched", tops);
                 assertNotNull("total shows count is null", tops.getTotalShowsCount());
                 assertNotNull("top shows percent is null", tops.getTopShowsPercent());
