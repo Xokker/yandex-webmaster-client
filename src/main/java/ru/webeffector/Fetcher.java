@@ -29,7 +29,8 @@ class Fetcher {
     private static final Logger logger = LoggerFactory.getLogger(Fetcher.class);
     private static final Class[] CLASSES_TO_BE_BOUND = new Class[]{ServiceDocument.class,
             HostList.class, Links.class, Host.class, HostStats.class,
-            IndexInfo.class, Verification.class, Tops.class};
+            IndexInfo.class, Verification.class, Tops.class, IncomingLinks.class,
+            HostErrors.class};
 
     private JAXBContext context;
     private XMLInputFactory factory = XMLInputFactory.newInstance();

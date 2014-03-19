@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.eclipse.persistence.oxm.annotations.XmlPath;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ public class Tops {
     private Double topShowsPercent;
 
     @XmlPath("top-queries/top-shows/top-info")
-    private List<TopEntity> topShows;
+    private List<TopEntity> topShows = new ArrayList<>();
 
     @XmlPath("top-queries/total-clicks-count/text()")
     private Integer totalClicksCount;
@@ -34,7 +35,7 @@ public class Tops {
     private Double topClicksPercent;
 
     @XmlPath("top-queries/top-clicks/top-info")
-    private List<TopEntity> topClicks;
+    private List<TopEntity> topClicks = new ArrayList<>();
 
     public Integer getTotalShowsCount() {
         return totalShowsCount;

@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.xml.bind.annotation.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,7 +25,7 @@ public class IndexInfo {
 
     @XmlElementWrapper(name = "last-week-index-urls")
     @XmlElement(name = "url")
-    private List<String> urls;
+    private List<String> lastWeekIndexUrls = new ArrayList<>();
 
     public Integer getIndexCount() {
         return indexCount;
@@ -34,19 +35,19 @@ public class IndexInfo {
         this.indexCount = indexCount;
     }
 
-    public List<String> getUrls() {
-        return urls;
+    public List<String> getLastWeekIndexUrls() {
+        return lastWeekIndexUrls;
     }
 
-    public void setUrls(List<String> urls) {
-        this.urls = urls;
+    public void setLastWeekIndexUrls(List<String> lastWeekIndexUrls) {
+        this.lastWeekIndexUrls = lastWeekIndexUrls;
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("indexCount", indexCount)
-                .append("urls", urls)
+                .append("lastWeekIndexUrls", lastWeekIndexUrls)
                 .toString();
     }
 }

@@ -4,8 +4,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.webeffector.exception.ForbiddenException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -16,6 +19,7 @@ import static org.junit.Assert.assertNotNull;
 public class WebmasterTest {
     private static final Logger logger = LoggerFactory.getLogger(WebmasterTest.class);
     private static List<Host> hosts;
+    private static Map<String, Verification> verifications = new HashMap<>();
 
     @BeforeClass
     public static void setUp() throws Exception {
@@ -41,6 +45,7 @@ public class WebmasterTest {
             Verification verification = host.verify();
             assertNotNull("Verification is null [" + host.getUrl() + "]",
                     verification);
+            verifications.put(host.getName(), verification);
             switch (verification.getVerificationState()) {
                 case VERIFIED:
                     assertNotNull("Cancellation possibility is null",
@@ -59,12 +64,21 @@ public class WebmasterTest {
         }
     }
 
+    private Verification getOrPutVerification(Host host) {
+        Verification verification = verifications.get(host.getName());
+        if (verification == null) {
+            verification = host.verify();
+            verifications.put(host.getName(), verification);
+        }
+        return verification;
+    }
+
     @Test
     public void testHostStats() throws Exception {
         for (Host host : hosts) {
             HostStats hostStats = host.stats();
             assertNotNull("name is null", hostStats.getName());
-            Verification verification = host.verify();
+            Verification verification = getOrPutVerification(host);
             if (verification.getVerificationState() == VerificationState.VERIFIED) {
                 assertNotNull("virused is null", hostStats.getVirused());
                 assertNotNull("last access is null", hostStats.getLastAccess());
@@ -89,13 +103,16 @@ public class WebmasterTest {
     @Test
     public void testIndexInfo() throws Exception {
         for (Host host : hosts) {
-            IndexInfo indexInfo = host.indexed();
-            if (indexInfo != null) {
-                assertNotNull("indexCount is not initialized", indexInfo.getIndexCount());
-                List<String> urls = indexInfo.getUrls();
-                assertNotNull("links is not fetched", urls);
-                for (String url : urls) {
-                    assertNotNull("Url is null", url);
+            Verification verification = getOrPutVerification(host);
+            if (verification.getVerificationState() == VerificationState.VERIFIED) {
+                IndexInfo indexInfo = host.indexed();
+                if (indexInfo != null) {
+                    assertNotNull("indexCount is not initialized", indexInfo.getIndexCount());
+                    List<String> urls = indexInfo.getLastWeekIndexUrls();
+                    assertNotNull("links is not fetched", urls);
+                    for (String url : urls) {
+                        assertNotNull("Url is null", url);
+                    }
                 }
             }
         }
@@ -113,7 +130,7 @@ public class WebmasterTest {
     @Test
     public void testTops() throws Exception {
         for (Host host : hosts) {
-            Verification verification = host.verify();
+            Verification verification = getOrPutVerification(host);
             if (verification.getVerificationState() == VerificationState.VERIFIED) {
                 Tops tops = host.tops();
                 logger.trace("tops [Host={},{}]: {}", host.getName(),
@@ -121,12 +138,49 @@ public class WebmasterTest {
                 assertNotNull("tops is not fetched", tops);
                 assertNotNull("total shows count is null", tops.getTotalShowsCount());
                 assertNotNull("top shows percent is null", tops.getTopShowsPercent());
-                assertNotNull("top shows is null", tops.getTopShows());
                 testTopEntities(tops.getTopShows());
                 assertNotNull("total clicks count is null", tops.getTotalClicksCount());
                 assertNotNull("top clicks percent is null", tops.getTopClicksPercent());
-                assertNotNull("top clicks is null", tops.getTopClicks());
                 testTopEntities(tops.getTopClicks());
+            }
+        }
+    }
+
+    @Test
+    public void testIncomingLinks() throws Exception {
+        for (Host host : hosts) {
+            Verification verification = getOrPutVerification(host);
+            if (verification.getVerificationState() == VerificationState.VERIFIED) {
+                IncomingLinks incomingLinks;
+                try {
+                    incomingLinks = host.links();
+                } catch (ForbiddenException ignored) {
+                    // that's ok if application does not have that right
+                    continue;
+                }
+                logger.trace("external links [Host: {}]: {}", host.getUrl(), incomingLinks);
+                assertNotNull("links count is null", incomingLinks.getLinksCount());
+                for (String url : incomingLinks.getLastWeekLinks()) {
+                    assertNotNull("url is null", url);
+                }
+            }
+        }
+    }
+
+    @Test
+    public void testHostErrors() throws Exception {
+        for (Host host : hosts) {
+            Verification verification = getOrPutVerification(host);
+            if (verification.getVerificationState() == VerificationState.VERIFIED) {
+                HostErrors hostErrors = host.excluded();
+                assertNotNull("total errors count is null",
+                        hostErrors.getUrlErrorsTotalCount());
+                for (UrlErrorsInfo urlErrorsInfo : hostErrors.getUrlErrors().values()) {
+                    assertNotNull("one of the url errors is null", urlErrorsInfo);
+                    assertNotNull("code is null", urlErrorsInfo.getCode());
+                    assertNotNull("error count is null", urlErrorsInfo.getErrorCount());
+                    assertNotNull("error severity is null", urlErrorsInfo.getErrorSeverity());
+                }
             }
         }
     }
