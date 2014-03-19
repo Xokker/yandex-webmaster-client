@@ -26,7 +26,7 @@ public class Tops {
     private Double topShowsPercent;
 
     @XmlPath("top-queries/top-shows/top-info")
-    private List<TopEntity> topShows = new ArrayList<>();
+    private List<TopEntity> topShows;
 
     @XmlPath("top-queries/total-clicks-count/text()")
     private Integer totalClicksCount;
@@ -35,7 +35,12 @@ public class Tops {
     private Double topClicksPercent;
 
     @XmlPath("top-queries/top-clicks/top-info")
-    private List<TopEntity> topClicks = new ArrayList<>();
+    private List<TopEntity> topClicks;
+
+    public Tops() {
+        topShows = new ArrayList<>();
+        topClicks = new ArrayList<>();
+    }
 
     public Integer getTotalShowsCount() {
         return totalShowsCount;

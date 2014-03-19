@@ -161,7 +161,7 @@ public class Host {
      *       not have rights for performing request
      */
     public History tic() {
-        throw new NotImplementedException("that feature will be implemented later");
+        return makeRequest(LinkType.tic_history, History.class);
     }
 
     /**
@@ -176,7 +176,7 @@ public class Host {
      *       not have rights for performing request
      */
     public History incomingLinksHistory() {
-        throw new NotImplementedException("that feature will be implemented later");
+        return makeRequest(LinkType.incoming_links_history, History.class);
     }
 
     /**
@@ -191,7 +191,7 @@ public class Host {
      *       not have rights for performing request
      */
     public History crawledURLsHistory() {
-        throw new NotImplementedException("that feature will be implemented later");
+        return makeRequest(LinkType.crawled_urls_history, History.class);
     }
 
     /**
@@ -206,7 +206,7 @@ public class Host {
      *       not have rights for performing request
      */
     public History indexedURLsHistory() {
-        throw new NotImplementedException("that feature will be implemented later");
+        return makeRequest(LinkType.indexed_urls_history, History.class);
     }
 
     /**
@@ -221,7 +221,7 @@ public class Host {
      *       not have rights for performing request
      */
     public History excludedURLsHistory() {
-        throw new NotImplementedException("that feature will be implemented later");
+        return makeRequest(LinkType.excluded_urls_history, History.class);
     }
 
     /**

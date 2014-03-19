@@ -1,6 +1,7 @@
 package ru.webeffector;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,6 +75,7 @@ public class WebmasterTest {
     }
 
     @Test
+    @Ignore
     public void testHostStats() throws Exception {
         for (Host host : hosts) {
             HostStats hostStats = host.stats();
@@ -101,6 +103,7 @@ public class WebmasterTest {
     }
 
     @Test
+    @Ignore
     public void testIndexInfo() throws Exception {
         for (Host host : hosts) {
             Verification verification = getOrPutVerification(host);
@@ -128,6 +131,7 @@ public class WebmasterTest {
     }
 
     @Test
+    @Ignore
     public void testTops() throws Exception {
         for (Host host : hosts) {
             Verification verification = getOrPutVerification(host);
@@ -147,6 +151,7 @@ public class WebmasterTest {
     }
 
     @Test
+    @Ignore
     public void testIncomingLinks() throws Exception {
         for (Host host : hosts) {
             Verification verification = getOrPutVerification(host);
@@ -168,6 +173,7 @@ public class WebmasterTest {
     }
 
     @Test
+    @Ignore
     public void testHostErrors() throws Exception {
         for (Host host : hosts) {
             Verification verification = getOrPutVerification(host);
@@ -181,6 +187,71 @@ public class WebmasterTest {
                     assertNotNull("error count is null", urlErrorsInfo.getErrorCount());
                     assertNotNull("error severity is null", urlErrorsInfo.getErrorSeverity());
                 }
+            }
+        }
+    }
+
+    @Test
+    public void testTicHistory() throws Exception {
+        for (Host host : hosts) {
+            Verification verification = getOrPutVerification(host);
+            if (verification.getVerificationState() == VerificationState.VERIFIED) {
+                History ticHistory = host.tic();
+                assertNotNull("tcy history is null", ticHistory);
+                // TODO: check the most recent added host (I assume history will be null)
+            }
+        }
+    }
+
+    @Test
+    public void testIncomingLinksHistory() throws Exception {
+        for (Host host : hosts) {
+            Verification verification = getOrPutVerification(host);
+            if (verification.getVerificationState() == VerificationState.VERIFIED) {
+                History incomingLinksHistory;
+                try {
+                    incomingLinksHistory = host.incomingLinksHistory();
+                } catch (ForbiddenException e) {
+                    continue;
+                }
+                assertNotNull("incoming links history is null", incomingLinksHistory);
+                // TODO: check the most recent added host (I assume history will be null)
+            }
+        }
+    }
+
+    @Test
+    public void testCrawledURLsHistory() throws Exception {
+        for (Host host : hosts) {
+            Verification verification = getOrPutVerification(host);
+            if (verification.getVerificationState() == VerificationState.VERIFIED) {
+                History crawledURLsHistory = host.crawledURLsHistory();
+                assertNotNull("incoming links history is null", crawledURLsHistory);
+                // TODO: check the most recent added host (I assume history will be null)
+            }
+        }
+    }
+
+    @Test
+    public void testIndexedURLsHistory() throws Exception {
+        for (Host host : hosts) {
+            Verification verification = getOrPutVerification(host);
+            if (verification.getVerificationState() == VerificationState.VERIFIED) {
+                History indexedURLsHistory = host.indexedURLsHistory();
+                assertNotNull("incoming links history is null", indexedURLsHistory);
+                // TODO: check the most recent added host (I assume history will be null)
+            }
+        }
+    }
+
+    @Test
+    public void testExcludedURLsHistory() throws Exception {
+        for (Host host : hosts) {
+            Verification verification = getOrPutVerification(host);
+            if (verification.getVerificationState() == VerificationState.VERIFIED) {
+                History excludedURLsHistory = host.excludedURLsHistory();
+                assertNotNull("incoming links history is null", excludedURLsHistory);
+                // TODO: check the most recent added host (I assume history will be null)
             }
         }
     }
