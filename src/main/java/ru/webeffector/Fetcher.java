@@ -30,7 +30,7 @@ class Fetcher {
     private static final Class[] CLASSES_TO_BE_BOUND = new Class[]{ServiceDocument.class,
             HostList.class, Links.class, Host.class, HostStats.class,
             IndexInfo.class, Verification.class, Tops.class, IncomingLinks.class,
-            HostErrors.class, History.class};
+            HostErrors.class, History.class, OriginalTexts.class};
 
     private JAXBContext context;
     private XMLInputFactory factory = XMLInputFactory.newInstance();

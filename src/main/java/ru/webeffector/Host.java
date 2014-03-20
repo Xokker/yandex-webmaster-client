@@ -235,8 +235,8 @@ public class Host {
      * @throws ru.webeffector.exception.ForbiddenException if application does
      *       not have rights for performing request
      */
-    public List<OriginalText> originalTexts() { // TODO: fix it
-        throw new NotImplementedException("that feature will be implemented later");
+    public OriginalTexts originalTexts() {
+        return makeRequest(LinkType.original_texts, OriginalTexts.class);
     }
 
     private Links getLinks() {

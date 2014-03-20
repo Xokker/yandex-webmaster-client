@@ -6,7 +6,7 @@
 
     <groupId>ru.webeffector</groupId>
     <artifactId>webmaster-client</artifactId>
-    <version>0.1.5</version>
+    <version>0.1.6-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -110,7 +110,7 @@
                 <artifactId>site-maven-plugin</artifactId>
                 <version>0.8</version>
                 <configuration>
-                    <message>Added history fetching.</message>
+                    <message>Added fetching of original texts.</message>
                     <noJekyll>true</noJekyll>
                     <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
                     <branch>refs/heads/mvn-repo</branch>

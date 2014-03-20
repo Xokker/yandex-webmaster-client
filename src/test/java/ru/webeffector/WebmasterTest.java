@@ -207,6 +207,7 @@ public class WebmasterTest {
     }
 
     @Test
+    @Ignore
     public void testIncomingLinksHistory() throws Exception {
         for (Host host : hosts) {
             Verification verification = getOrPutVerification(host);
@@ -226,6 +227,7 @@ public class WebmasterTest {
     }
 
     @Test
+    @Ignore
     public void testCrawledURLsHistory() throws Exception {
         for (Host host : hosts) {
             Verification verification = getOrPutVerification(host);
@@ -240,6 +242,7 @@ public class WebmasterTest {
     }
 
     @Test
+    @Ignore
     public void testIndexedURLsHistory() throws Exception {
         for (Host host : hosts) {
             Verification verification = getOrPutVerification(host);
@@ -254,6 +257,7 @@ public class WebmasterTest {
     }
 
     @Test
+    @Ignore
     public void testExcludedURLsHistory() throws Exception {
         for (Host host : hosts) {
             Verification verification = getOrPutVerification(host);
@@ -263,6 +267,19 @@ public class WebmasterTest {
                 assertEquals("wrong history type", HistoryType.EXCLUDED_URLS_COUNT,
                         excludedURLsHistory.getHistoryType());
                 // TODO: check the most recent added host (I assume history will be null)
+            }
+        }
+    }
+
+    @Test
+    public void testOriginalTexts() throws Exception {
+        for (Host host : hosts) {
+            Verification verification = getOrPutVerification(host);
+            if (verification.getVerificationState() == VerificationState.VERIFIED) {
+                OriginalTexts originalTexts = host.originalTexts();
+                assertNotNull("original texts was not fetched", originalTexts);
+                assertNotNull("total texts is null", originalTexts.getTotal());
+                assertNotNull("can add is null", originalTexts.getCanAdd());
             }
         }
     }
