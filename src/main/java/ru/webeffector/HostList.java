@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,6 +17,10 @@ class HostList {
 
     @XmlElement(name = "host")
     List<Host> hosts;
+
+    HostList() {
+        hosts = new ArrayList<>();
+    }
 
     @Override
     public String toString() {

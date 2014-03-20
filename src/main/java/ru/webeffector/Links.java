@@ -26,7 +26,11 @@ class Links {
     }
 
     private List<Link> links;
-    private EnumMap<LinkType, String> linksMap = new EnumMap<>(LinkType.class);
+    private EnumMap<LinkType, String> linksMap;
+
+    Links() {
+        linksMap = new EnumMap<>(LinkType.class);
+    }
 
     public String get(LinkType linkType) {
         return linksMap.get(linkType);

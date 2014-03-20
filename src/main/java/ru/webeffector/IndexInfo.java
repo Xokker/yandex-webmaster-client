@@ -25,7 +25,11 @@ public class IndexInfo {
 
     @XmlElementWrapper(name = "last-week-index-urls")
     @XmlElement(name = "url")
-    private List<String> lastWeekIndexUrls = new ArrayList<>();
+    private List<String> lastWeekIndexUrls;
+
+    IndexInfo() {
+        lastWeekIndexUrls = new ArrayList<>();
+    }
 
     public Integer getIndexCount() {
         return indexCount;

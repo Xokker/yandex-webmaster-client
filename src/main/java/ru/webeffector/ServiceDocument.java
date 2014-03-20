@@ -2,9 +2,8 @@ package ru.webeffector;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.eclipse.persistence.oxm.annotations.XmlPath;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -17,22 +16,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @since 11.03.2014
  */
 @XmlRootElement(name = "service")
-class ServiceDocument {        // TODO: refactor, use xpath
-    static private class Collection {
-        @XmlAttribute(name = "href")
-        private String hostUrl;
-    }
+class ServiceDocument {
 
-    static private class Workspace {
-        @XmlElement(name = "collection")
-        private Collection collection;
-    }
-
-    @XmlElement(name = "workspace")
-    private Workspace workspace;
+    @XmlPath("workspace/collection/@href")
+    private String hostUrl;
 
     public String getHostsUrl() {
-        return workspace.collection.hostUrl;
+        return hostUrl;
     }
 
     @Override

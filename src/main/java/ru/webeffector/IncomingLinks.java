@@ -26,7 +26,11 @@ public class IncomingLinks {
 
     @XmlElementWrapper(name = "last-week-links")
     @XmlElement(name = "url")
-    private List<String> lastWeekLinks = new ArrayList<>();
+    private List<String> lastWeekLinks;
+
+    IncomingLinks() {
+        lastWeekLinks = new ArrayList<>();
+    }
 
     public Integer getLinksCount() {
         return linksCount;

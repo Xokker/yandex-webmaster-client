@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -198,6 +199,8 @@ public class WebmasterTest {
             if (verification.getVerificationState() == VerificationState.VERIFIED) {
                 History ticHistory = host.tic();
                 assertNotNull("tcy history is null", ticHistory);
+                assertEquals("wrong history type", HistoryType.TIC,
+                        ticHistory.getHistoryType());
                 // TODO: check the most recent added host (I assume history will be null)
             }
         }
@@ -215,6 +218,8 @@ public class WebmasterTest {
                     continue;
                 }
                 assertNotNull("incoming links history is null", incomingLinksHistory);
+                assertEquals("wrong history type", HistoryType.INCOMING_LINKS_COUNT,
+                        incomingLinksHistory.getHistoryType());
                 // TODO: check the most recent added host (I assume history will be null)
             }
         }
@@ -227,6 +232,8 @@ public class WebmasterTest {
             if (verification.getVerificationState() == VerificationState.VERIFIED) {
                 History crawledURLsHistory = host.crawledURLsHistory();
                 assertNotNull("incoming links history is null", crawledURLsHistory);
+                assertEquals("wrong history type", HistoryType.CRAWLED_URLS_COUNT,
+                        crawledURLsHistory.getHistoryType());
                 // TODO: check the most recent added host (I assume history will be null)
             }
         }
@@ -239,6 +246,8 @@ public class WebmasterTest {
             if (verification.getVerificationState() == VerificationState.VERIFIED) {
                 History indexedURLsHistory = host.indexedURLsHistory();
                 assertNotNull("incoming links history is null", indexedURLsHistory);
+                assertEquals("wrong history type", HistoryType.INDEXED_URLS_COUNT,
+                        indexedURLsHistory.getHistoryType());
                 // TODO: check the most recent added host (I assume history will be null)
             }
         }
@@ -251,6 +260,8 @@ public class WebmasterTest {
             if (verification.getVerificationState() == VerificationState.VERIFIED) {
                 History excludedURLsHistory = host.excludedURLsHistory();
                 assertNotNull("incoming links history is null", excludedURLsHistory);
+                assertEquals("wrong history type", HistoryType.EXCLUDED_URLS_COUNT,
+                        excludedURLsHistory.getHistoryType());
                 // TODO: check the most recent added host (I assume history will be null)
             }
         }

@@ -26,7 +26,11 @@ public class HostErrors {
     @XmlPath("url-errors/@count")
     private Integer urlErrorsTotalCount;
 
-    private Map<Integer, UrlErrorsInfo> urlErrors = new HashMap<>();
+    private Map<Integer, UrlErrorsInfo> urlErrors;
+
+    HostErrors() {
+        urlErrors = new HashMap<>();
+    }
 
     @XmlPath("url-errors/url-errors-with-code")
     private void setUrlErrorsInfoList(List<UrlErrorsInfo> urlErrorsInfoList) {
