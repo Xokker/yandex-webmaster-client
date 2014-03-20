@@ -3,10 +3,7 @@ package ru.webeffector;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +27,7 @@ public class OriginalTexts {
     @XmlAttribute(name = "can-add")
     private Boolean canAdd;
 
+    @XmlElement(name = "original-text")
     private List<OriginalText> originalTexts;
 
     OriginalTexts() {
