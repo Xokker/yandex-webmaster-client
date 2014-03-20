@@ -45,6 +45,20 @@ public class History {
         }
     }
 
+    /**
+     * Merges current history with another history object. Mutates this
+     * history.
+     *
+     * @param anotherHistory history object to merge with
+     * @return this history object
+     */
+    public History mergeWith(final History anotherHistory) {
+        if (anotherHistory.getHistory() != null) {
+            history.putAll(anotherHistory.getHistory());
+        }
+        return this;
+    }
+
     private List<HistoryEntry> getHistoryList() {
         return null;
     }
