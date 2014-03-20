@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * @see Host
  */
 @XmlRootElement(name = "host")
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.NONE)
 public class Verification {
 
     @XmlPath("verification/@state")
@@ -45,8 +45,11 @@ public class Verification {
     @XmlElement
     private String name;
 
-    @XmlElement(name = "other-users-exist/text()")
     private Boolean otherUsersExist;
+
+    Verification() {
+        otherUsersExist = false;
+    }
 
     public String getName() {
         return name;
@@ -56,12 +59,15 @@ public class Verification {
         this.name = name;
     }
 
+    @XmlPath("other-users-exist/text()")
     public Boolean getOtherUsersExist() {
         return otherUsersExist;
     }
 
-    public void setOtherUsersExist(Boolean otherUsersExist) {
-        this.otherUsersExist = otherUsersExist;
+    private void setOtherUsersExist(Boolean otherUsersExist) {
+        // it is empty tag, if it is passed, that means true
+        // if it's not, that means false
+        this.otherUsersExist = true;
     }
 
     public VerificationState getVerificationState() {

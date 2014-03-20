@@ -56,6 +56,8 @@ public class WebmasterTest {
                             verification.getDate());
                     assertNotNull("Verification type is null",
                             verification.getVerificationConfirmationType());
+                    assertNotNull("other users exist is null",
+                            verification.getOtherUsersExist());
                     break;
                 case NEVER_VERIFIED:
                 case VERIFICATION_FAILED:
