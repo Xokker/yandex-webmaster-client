@@ -5,14 +5,14 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.webeffector.exception.AuthorizationException;
 import ru.webeffector.exception.ForbiddenException;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 /**
  * @author Ernest Sadykov
@@ -28,7 +28,11 @@ public class WebmasterTest {
         String accessToken = System.getProperty("accessToken");
         assertNotNull(accessToken);
         Webmaster webmaster = new Webmaster(accessToken);
-        hosts = webmaster.getHosts();
+        try {
+            hosts = webmaster.getHosts();
+        } catch (AuthorizationException e) {
+            fail("token is expired");
+        }
         assertNotNull("Hosts is not fetched", hosts);
     }
 
@@ -274,6 +278,7 @@ public class WebmasterTest {
     }
 
     @Test
+    @Ignore
     public void testOriginalTexts() throws Exception {
         for (Host host : hosts) {
             Verification verification = getOrPutVerification(host);
@@ -282,6 +287,36 @@ public class WebmasterTest {
                 assertNotNull("original texts was not fetched", originalTexts);
                 assertNotNull("total texts is null", originalTexts.getTotal());
                 assertNotNull("can add is null", originalTexts.getCanAdd());
+            }
+        }
+    }
+
+    private void traverseSitemap(Sitemap sitemap) {
+        SitemapInfo sitemapInfo = sitemap.getSitemapInfo();
+        assertNotNull(sitemapInfo);
+        assertNotNull(sitemapInfo.getLatestInfo());
+        List<Sitemap> children = sitemap.children();
+        if (sitemapInfo.getLatestInfo().getType() ==
+                SitemapAdditionalInfo.SitemapType.SITEMAPINDX) {
+            assertFalse("sitemap index does not have children", children.isEmpty());
+        }
+        if (!children.isEmpty()) {
+            for (Sitemap child : children) {
+                traverseSitemap(child);
+            }
+        }
+    }
+
+    @Test
+    public void testSitemaps() throws Exception {
+        for (Host host : hosts) {
+            Verification verification = getOrPutVerification(host);
+            if (verification.getVerificationState() == VerificationState.VERIFIED) {
+                List<Sitemap> sitemaps = host.sitemaps();
+                for (Sitemap sitemap : sitemaps) {
+                    traverseSitemap(sitemap);
+                }
+
             }
         }
     }

@@ -1,6 +1,5 @@
 package ru.webeffector;
 
-import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import ru.webeffector.exception.ForbiddenException;
@@ -29,7 +28,7 @@ public class Host {
 
     private Links links;
 
-    public Host() {
+    Host() {
     }
 
     Host(Webmaster webmaster) {
@@ -50,6 +49,7 @@ public class Host {
      *
      * API docs [EN]: http://api.yandex.com/webmaster/doc/dg/reference/hosts-stats.xml
      * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/hosts-stats.xml
+     *
      * @return statistics of this host
      *
      * @throws ru.webeffector.exception.ForbiddenException if application does
@@ -64,6 +64,7 @@ public class Host {
      *
      * API docs [EN]: http://api.yandex.com/webmaster/doc/dg/reference/hosts-indexed.xml
      * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/hosts-indexed.xml
+     *
      * @return index information about this host
      *
      * @throws ru.webeffector.exception.ForbiddenException if application does
@@ -79,7 +80,8 @@ public class Host {
      *
      * API docs [EN]: http://api.yandex.com/webmaster/doc/dg/reference/host-tops.xml
      * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/host-tops.xml
-     * @return
+     *
+     * @return object that aggregates information about popular queries and clicks
      *
      * @throws ru.webeffector.exception.ForbiddenException if application does
      *       not have rights for performing request
@@ -94,7 +96,8 @@ public class Host {
      *
      * API docs [EN]: http://api.yandex.com/webmaster/doc/dg/reference/host-links.xml
      * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/host-links.xml
-     * @return
+     *
+     * @return objects that represents information about external links
      *
      * @throws ru.webeffector.exception.ForbiddenException if application does
      *       not have rights for performing request
@@ -108,7 +111,8 @@ public class Host {
      *
      * API docs [EN]: http://api.yandex.com/webmaster/doc/dg/reference/hosts-verify.xml
      * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/hosts-verify.xml
-     * @return
+     *
+     * @return verification info
      *
      * @throws ru.webeffector.exception.ForbiddenException if application does
      *       not have rights for performing request
@@ -123,7 +127,8 @@ public class Host {
      *
      * API docs [EN]: http://api.yandex.com/webmaster/doc/dg/reference/hosts-errors.xml
      * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/hosts-errors.xml
-     * @return
+     *
+     * @return urls that were excluded from index because of errors
      *
      * @throws ru.webeffector.exception.ForbiddenException if application does
      *       not have rights for performing request
@@ -137,13 +142,19 @@ public class Host {
      *
      * API docs [EN]: http://api.yandex.com/webmaster/doc/dg/reference/sitemaps.xml
      * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/sitemaps.xml
-     * @return
+     *
+     * @return list of sitemaps
      *
      * @throws ru.webeffector.exception.ForbiddenException if application does
      *       not have rights for performing request
      */
-    public List<Sitemap> sitemaps() {   // TODO: fix it
-        throw new NotImplementedException("that feature will be implemented later");
+    public List<Sitemap> sitemaps() {
+        List<Sitemap> sitemaps =
+                makeRequest(LinkType.sitemaps, SitemapList.class).sitemaps;
+        for (Sitemap sitemap : sitemaps) {
+            sitemap.setWebmaster(webmaster);
+        }
+        return sitemaps;
     }
 
     /**
@@ -155,7 +166,8 @@ public class Host {
      *
      * API docs [EN]: http://api.yandex.com/webmaster/doc/dg/reference/history-tic.xml
      * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/history-tic.xml
-     * @return
+     *
+     * @return tcy history
      *
      * @throws ru.webeffector.exception.ForbiddenException if application does
      *       not have rights for performing request
@@ -170,7 +182,8 @@ public class Host {
      *
      * API docs [EN]: http://api.yandex.com/webmaster/doc/dg/reference/history-incoming-links.xml
      * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/history-incoming-links.xml
-     * @return
+     *
+     * @return history of external links which refer to user's host
      *
      * @throws ru.webeffector.exception.ForbiddenException if application does
      *       not have rights for performing request
@@ -185,7 +198,8 @@ public class Host {
      *
      * API docs [EN]: http://api.yandex.com/webmaster/doc/dg/reference/history-crawled-urls.xml
      * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/history-crawled-urls.xml
-     * @return
+     *
+     * @return crawling history
      *
      * @throws ru.webeffector.exception.ForbiddenException if application does
      *       not have rights for performing request
@@ -200,7 +214,8 @@ public class Host {
      *
      * API docs [EN]: http://api.yandex.com/webmaster/doc/dg/reference/history-indexed-urls.xml
      * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/history-indexed-urls.xml
-     * @return
+     *
+     * @return history of page indexation
      *
      * @throws ru.webeffector.exception.ForbiddenException if application does
      *       not have rights for performing request
@@ -215,7 +230,8 @@ public class Host {
      *
      * API docs [EN]: http://api.yandex.com/webmaster/doc/dg/reference/history-excluded-urls.xml
      * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/history-excluded-urls.xml
-     * @return
+     *
+     * @return history of excluded from history urls
      *
      * @throws ru.webeffector.exception.ForbiddenException if application does
      *       not have rights for performing request
@@ -230,7 +246,8 @@ public class Host {
      *
      * API docs [EN]: http://api.yandex.com/webmaster/doc/dg/reference/host-original-texts.xml
      * API docs [RU]: http://api.yandex.ru/webmaster/doc/dg/reference/host-original-texts.xml
-     * @return
+     *
+     * @return original texts that were uploaded to yandex.webmaster
      *
      * @throws ru.webeffector.exception.ForbiddenException if application does
      *       not have rights for performing request

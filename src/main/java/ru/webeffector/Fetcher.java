@@ -30,7 +30,8 @@ class Fetcher {
     private static final Class[] CLASSES_TO_BE_BOUND = new Class[]{ServiceDocument.class,
             HostList.class, Links.class, Host.class, HostStats.class,
             IndexInfo.class, Verification.class, Tops.class, IncomingLinks.class,
-            HostErrors.class, History.class, OriginalTexts.class};
+            HostErrors.class, History.class, OriginalTexts.class,
+            SitemapInfo.class, SitemapList.class};
 
     private JAXBContext context;
     private XMLInputFactory factory = XMLInputFactory.newInstance();
@@ -49,7 +50,7 @@ class Fetcher {
         return context;
     }
 
-    private void checkRespone(StatusLine statusLine) {
+    private void checkResponse(StatusLine statusLine) {
         if (statusLine.getStatusCode() != 200) {
             throw WebmasterException.newException(statusLine.getStatusCode(),
                     statusLine.getReasonPhrase());
@@ -63,7 +64,7 @@ class Fetcher {
         try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
             Unmarshaller unmarshaller = getJaxbContext().createUnmarshaller();
 
-            checkRespone(response.getStatusLine());
+            checkResponse(response.getStatusLine());
 
             XMLStreamReader reader = null;
             try {
