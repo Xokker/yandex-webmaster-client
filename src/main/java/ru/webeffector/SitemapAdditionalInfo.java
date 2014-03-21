@@ -43,9 +43,11 @@ public class SitemapAdditionalInfo {
     private String addedBy;
 
     @XmlElement(name = "processed-on")
+    @XmlJavaTypeAdapter(DateTimeAdapter.class)
     private DateTime processDate;
 
     @XmlElement(name = "real-processed-on")
+    @XmlJavaTypeAdapter(DateTimeAdapter.class)
     private DateTime realProcessDate;
 
     @XmlElement
