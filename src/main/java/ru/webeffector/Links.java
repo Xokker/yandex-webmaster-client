@@ -25,7 +25,6 @@ class Links {
         private String value;
     }
 
-    private List<Link> links;
     private EnumMap<LinkType, String> linksMap;
 
     Links() {
@@ -38,13 +37,12 @@ class Links {
 
     @XmlElement(name = "link")
     private List<Link> getLinks() {
-        return links;
+        return null;
     }
 
     private void setLinks(List<Link> links) {
         for (Link link : links) {
             linksMap.put(LinkType.valueOf(link.key.replace('-', '_')), link.value);
         }
-        links = null;
     }
 }
