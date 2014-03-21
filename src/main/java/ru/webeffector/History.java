@@ -2,7 +2,7 @@ package ru.webeffector;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -22,8 +22,8 @@ public class History {
 
     private static class HistoryEntry {
         @XmlAttribute(name = "date")
-        @XmlJavaTypeAdapter(DateTimeAdapter.class)
-        private DateTime date;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate date;
 
         @XmlValue
         private Integer value;
@@ -32,7 +32,7 @@ public class History {
     @XmlAttribute(name = "type")
     private HistoryType historyType;
 
-    private SortedMap<DateTime, Integer> history;
+    private SortedMap<LocalDate, Integer> history;
 
     public History() {
         history = new TreeMap<>();
@@ -63,11 +63,11 @@ public class History {
         return null;
     }
 
-    public SortedMap<DateTime, Integer> getHistory() {
+    public SortedMap<LocalDate, Integer> getHistory() {
         return history;
     }
 
-    public void setHistory(SortedMap<DateTime, Integer> history) {
+    public void setHistory(SortedMap<LocalDate, Integer> history) {
         this.history = history;
     }
 
