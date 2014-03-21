@@ -1,9 +1,8 @@
-package ru.webeffector;
+package ru.webeffector.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.eclipse.persistence.oxm.annotations.XmlPath;
-import ru.webeffector.model.SitemapAdditionalInfo;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -20,7 +19,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "sitemap")
 @XmlAccessorType(XmlAccessType.NONE)
-class SitemapInfo {
+public class SitemapInfo {
+
+    @XmlPath("link[@rel='sitemap-content']/@href")
+    private String sitemapUrl;
+
+    @XmlPath("link[@rel='self']/@href")
+    private String sitemapInfoUrl;
 
     @XmlPath("link[@rel='sitemap-index-children']/@href")
     private String childrenUrl;
@@ -30,6 +35,22 @@ class SitemapInfo {
 
     @XmlPath("info[@type='in-search']")
     private SitemapAdditionalInfo inSearchInfo;
+
+    public String getSitemapUrl() {
+        return sitemapUrl;
+    }
+
+    public void setSitemapUrl(String sitemapUrl) {
+        this.sitemapUrl = sitemapUrl;
+    }
+
+    public String getSitemapInfoUrl() {
+        return sitemapInfoUrl;
+    }
+
+    public void setSitemapInfoUrl(String sitemapInfoUrl) {
+        this.sitemapInfoUrl = sitemapInfoUrl;
+    }
 
     public String getChildrenUrl() {
         return childrenUrl;
