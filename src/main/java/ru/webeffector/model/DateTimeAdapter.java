@@ -1,4 +1,4 @@
-package ru.webeffector;
+package ru.webeffector.model;
 
 import org.joda.time.DateTime;
 
@@ -10,7 +10,11 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  * @author Ernest Sadykov
  * @since 12.03.2014
  */
-class DateTimeAdapter extends XmlAdapter<String, DateTime> {
+public class DateTimeAdapter extends XmlAdapter<String, DateTime> {
+    private DateTimeAdapter() {
+
+    }
+
     @Override
     public DateTime unmarshal(String v) throws Exception {
         return new DateTime(v);
@@ -20,5 +24,4 @@ class DateTimeAdapter extends XmlAdapter<String, DateTime> {
     public String marshal(DateTime v) throws Exception {
         return v.toString();
     }
-
 }

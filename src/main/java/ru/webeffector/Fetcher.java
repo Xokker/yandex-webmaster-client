@@ -8,7 +8,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.eclipse.persistence.jaxb.JAXBContextFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.webeffector.exception.WebmasterException;
+import ru.webeffector.model.*;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -52,8 +52,8 @@ class Fetcher {
 
     private void checkResponse(StatusLine statusLine) {
         if (statusLine.getStatusCode() != 200) {
-            throw WebmasterException.newException(statusLine.getStatusCode(),
-                    statusLine.getReasonPhrase());
+            throw WebmasterExceptionFactory.newException(
+                    statusLine.getStatusCode(), statusLine.getReasonPhrase());
         }
     }
 

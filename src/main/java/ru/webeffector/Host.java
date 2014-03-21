@@ -3,6 +3,7 @@ package ru.webeffector;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import ru.webeffector.exception.ForbiddenException;
+import ru.webeffector.model.*;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

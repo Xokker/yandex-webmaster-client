@@ -1,12 +1,12 @@
 package ru.webeffector;
 
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.webeffector.exception.AuthorizationException;
 import ru.webeffector.exception.ForbiddenException;
+import ru.webeffector.model.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -82,7 +82,6 @@ public class WebmasterTest {
     }
 
     @Test
-    @Ignore
     public void testHostStats() throws Exception {
         for (Host host : hosts) {
             HostStats hostStats = host.stats();
@@ -110,7 +109,6 @@ public class WebmasterTest {
     }
 
     @Test
-    @Ignore
     public void testIndexInfo() throws Exception {
         for (Host host : hosts) {
             Verification verification = getOrPutVerification(host);
@@ -138,7 +136,6 @@ public class WebmasterTest {
     }
 
     @Test
-    @Ignore
     public void testTops() throws Exception {
         for (Host host : hosts) {
             Verification verification = getOrPutVerification(host);
@@ -158,7 +155,6 @@ public class WebmasterTest {
     }
 
     @Test
-    @Ignore
     public void testIncomingLinks() throws Exception {
         for (Host host : hosts) {
             Verification verification = getOrPutVerification(host);
@@ -180,7 +176,6 @@ public class WebmasterTest {
     }
 
     @Test
-    @Ignore
     public void testHostErrors() throws Exception {
         for (Host host : hosts) {
             Verification verification = getOrPutVerification(host);
@@ -213,7 +208,6 @@ public class WebmasterTest {
     }
 
     @Test
-    @Ignore
     public void testIncomingLinksHistory() throws Exception {
         for (Host host : hosts) {
             Verification verification = getOrPutVerification(host);
@@ -233,7 +227,6 @@ public class WebmasterTest {
     }
 
     @Test
-    @Ignore
     public void testCrawledURLsHistory() throws Exception {
         for (Host host : hosts) {
             Verification verification = getOrPutVerification(host);
@@ -248,7 +241,6 @@ public class WebmasterTest {
     }
 
     @Test
-    @Ignore
     public void testIndexedURLsHistory() throws Exception {
         for (Host host : hosts) {
             Verification verification = getOrPutVerification(host);
@@ -263,7 +255,6 @@ public class WebmasterTest {
     }
 
     @Test
-    @Ignore
     public void testExcludedURLsHistory() throws Exception {
         for (Host host : hosts) {
             Verification verification = getOrPutVerification(host);
@@ -278,7 +269,6 @@ public class WebmasterTest {
     }
 
     @Test
-    @Ignore
     public void testOriginalTexts() throws Exception {
         for (Host host : hosts) {
             Verification verification = getOrPutVerification(host);

@@ -1,4 +1,4 @@
-package ru.webeffector;
+package ru.webeffector.model;
 
 /**
  * Status of verification of site management rights.

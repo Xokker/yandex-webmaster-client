@@ -4,6 +4,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.eclipse.persistence.oxm.annotations.XmlPath;
 import org.joda.time.DateTime;
+import ru.webeffector.model.DateTimeAdapter;
+import ru.webeffector.model.VerificationConfirmationType;
+import ru.webeffector.model.VerificationState;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

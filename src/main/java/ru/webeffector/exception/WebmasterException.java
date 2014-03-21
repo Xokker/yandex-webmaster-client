@@ -13,28 +13,6 @@ package ru.webeffector.exception;
 public abstract class WebmasterException extends RuntimeException {
     public abstract int getErrorCode();
 
-    // TODO: to think about package structure, that method should not be public
-    public static WebmasterException newException(int errorCode, String message) {
-        switch (errorCode) {
-            case 400:
-                return new InvalidRequestException(message);
-            case 401:
-                return new AuthorizationException(message);
-            case 403:
-                return new ForbiddenException(message);
-            case 405:
-                return new InvalidMethodException(message);
-            case 409:
-                return new DataConflictException(message);
-            case 500:
-                return new InternalServerErrorException(message);
-            default:
-                throw new IllegalArgumentException("Possible values of error " +
-                        "codes: 400, 401, 403, 405, 409 and 500. Passed: " +
-                        errorCode);
-        }
-    }
-
     protected WebmasterException() {
     }
 

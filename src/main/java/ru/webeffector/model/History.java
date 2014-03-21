@@ -1,4 +1,4 @@
-package ru.webeffector;
+package ru.webeffector.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.List;
 import java.util.SortedMap;
@@ -85,5 +86,17 @@ public class History {
                 .append("historyType", historyType)
                 .append("history", history)
                 .toString();
+    }
+}
+
+class LocalDateAdapter extends XmlAdapter<String, LocalDate> {
+    @Override
+    public LocalDate unmarshal(String v) throws Exception {
+        return new LocalDate(v);
+    }
+
+    @Override
+    public String marshal(LocalDate v) throws Exception {
+        return v.toString();
     }
 }

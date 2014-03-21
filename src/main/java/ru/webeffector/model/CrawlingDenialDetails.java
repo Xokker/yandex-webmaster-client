@@ -1,4 +1,4 @@
-package ru.webeffector;
+package ru.webeffector.model;
 
 /**
  * Reasons the site was not indexed.

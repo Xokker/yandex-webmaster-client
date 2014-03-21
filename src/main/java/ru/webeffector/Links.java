@@ -1,5 +1,7 @@
 package ru.webeffector;
 
+import ru.webeffector.model.LinkType;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
