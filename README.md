@@ -15,6 +15,6 @@ Dependency management:
 <dependency>
     <groupId>ru.webeffector</groupId>
     <artifactId>webmaster-client</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.2</version>
 </dependency>
 ```
