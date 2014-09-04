@@ -1,6 +1,7 @@
 package ru.webeffector;
 
 import org.apache.http.StatusLine;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -18,6 +19,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Fetches information from the the given source and maps it to the given class.
@@ -34,9 +36,19 @@ class Fetcher {
             SitemapInfo.class, SitemapList.class};
 
     private JAXBContext context;
-    private XMLInputFactory factory = XMLInputFactory.newInstance();
-    private CloseableHttpClient httpClient = HttpClients.createDefault();
+    private final XMLInputFactory factory;
+    private final CloseableHttpClient httpClient;
+    private final RequestConfig config;
 
+    public Fetcher() {
+        config = RequestConfig.custom()
+                .setConnectionRequestTimeout((int) TimeUnit.SECONDS.toMillis(20))
+                .setSocketTimeout((int) TimeUnit.SECONDS.toMillis(20))
+                .setConnectTimeout((int) TimeUnit.SECONDS.toMillis(20))
+                .build();
+        factory = XMLInputFactory.newInstance();
+        httpClient = HttpClients.createDefault();
+    }
 
     private JAXBContext getJaxbContext() {
         if (context == null) {
@@ -58,7 +70,7 @@ class Fetcher {
     }
 
     <T> T makeRequest(String url, String accessToken, Class<T> clazz) {
-        HttpGet httpGet = new HttpGet(url);
+        HttpGet httpGet = new HttpGet(url); httpGet.setConfig(config);
         httpGet.setHeader("Authorization", "OAuth " + accessToken);
         T result = null;
         try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
